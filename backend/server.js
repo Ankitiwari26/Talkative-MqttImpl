@@ -143,41 +143,41 @@ const server = app.listen(
 );
 
 // MQTT Client Setup
-const mqttClient = mqtt.connect('mqtts://c3fb6cea12c74138a6233a6b0343101d.s1.eu.hivemq.cloud:8883', {
+const mqttClient = mqtt.connect('wss://c3fb6cea12c74138a6233a6b0343101d.s1.eu.hivemq.cloud:8884/mqtt', {
   username: 'AnkitHive',  //username
   password: 'Ankit@9981',  // password
   clientId: 'chat-app-server',  // Unique id for server
 });
 
 mqttClient.on('connect', () => {
-  console.log('Connected to HiveMQ Cloud MQTT broker');
+  console.log('Connected to HiveMQ Cloud MQTT broker.....');
 
-  // Subscribe to a topic like 'chat-room'
-  mqttClient.subscribe('chat-room/#', (err) => {
-    if (err) {
-      console.log('Error subscribing to chat-room topic:', err);
-    } else {
-      console.log('Subscribed to chat-room topic');
-    }
-  });
-});
+  //   // Subscribe to a topics like 'chat-room'
+  //   mqttClient.subscribe('chat-room/#', (err) => {
+  //     if (err) {
+  //       console.log('Error subscribing to chat-room topic:', err);
+  //     } else {
+  //       console.log('Subscribed to chat-room topic......');
+  //     }
+  //   });
+  // });
 
-// Handle incoming MQTT messages
-mqttClient.on('message', (topic, message) => {
-  console.log(`Message received on topic ${topic}: ${message.toString()}`);
+  // // Handle incoming MQTT messages
+  // mqttClient.on('message', (topic, message) => {
+  //   console.log(`Message received on topic ${topic}: ${message.toString()}`);
 
 
-  if (topic.startsWith('chat-room/')) {
-    // Handle chat message logic
-    const newMessage = JSON.parse(message.toString());
-    const chat = newMessage.chat;
-    if (!chat.users) return console.log("chat.users not defined");
+  //   if (topic.startsWith('chat-room/')) {
+  //     // Handle chat message logic
+  //     const newMessage = JSON.parse(message.toString());
+  //     const chat = newMessage.chat;
+  //     if (!chat.users) return console.log("chat.users not defined");
 
-    // Iterate through the users in the chat
-    chat.users.forEach((user) => {
-      if (user._id === newMessage.sender._id) return;
-    });
-  }
+  //     // Iterate through the users in the chat
+  //     chat.users.forEach((user) => {
+  //       if (user._id === newMessage.sender._id) return;
+  //     });
+  //   }
 });
 
 // MQTT connection error handling
